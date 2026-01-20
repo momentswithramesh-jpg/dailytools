@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Fera Tools</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand"><h1>🛠️ Fera Tools</h1></div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#tools">Tools</a></li>
+                <li><a href="../about.html">About Us</a></li>
+                <li><a href="../contact.html">Contact Us</a></li>
+                <li><button class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="tool-page">
+        <div class="container">
+            <a href="../index.html#tools" class="back-link">← Back to Tools</a>
+            <div class="tool-header">
+                <h1>QR Code Generator</h1>
+                <p>Generate QR codes</p>
+            </div>
+            <div class="tool-container">
+                <div class="form-group"><label for="data">Data to encode:</label><input type="text" id="data" placeholder="Text or URL"></div><div class="form-group"><label for="size">Size:</label><input type="number" id="size" value="200" min="100" max="500"></div>
+                <button onclick="processTool()" class="btn btn-primary">Process</button>
+                <button onclick="clearAll()" class="btn btn-secondary">Clear</button>
+                <div class="result-container" id="result" style="display:none;">
+                    <h3>Result:</h3>
+                    <div class="result-output" id="output"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../script.js"></script>
+    <script>
+        function processTool() {
+            const data = document.getElementById('data').value.trim();
+            const size = parseInt(document.getElementById('size').value) || 200;
+            if (!data) { alert('Enter data'); return; }
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}`;
+            document.getElementById('output').innerHTML = `<img src="${qrUrl}" alt="QR Code" style="max-width: 100%;"><br><br>QR Code URL: <a href="${qrUrl}" target="_blank">${qrUrl}</a>`;
+            document.getElementById('result').style.display = 'block';
+        }
+        function clearAll() {
+            document.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
+            document.getElementById('result').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
